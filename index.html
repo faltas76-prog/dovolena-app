@@ -4,162 +4,147 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#1f6f43">
-  <meta name="description" content="Jednoduchá evidence dovolené pro 10 zaměstnanců">
-  <title>Evidence dovolené</title>
+  <meta name="description" content="Evidence dovolené zaměstnanců">
+  <title>Evidence dovolené 2.0</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app">
-    <header class="topbar">
-      <div>
-        <div class="eyebrow">PERSONÁLNÍ EVIDENCE</div>
-        <h1>Evidence dovolené</h1>
-        <p class="subtitle">Přehled dovolené zaměstnanců v měsíčním kalendáři</p>
-      </div>
-      <div class="header-actions">
-        <button id="todayBtn" class="btn secondary">Dnes</button>
-        <button id="printBtn" class="btn secondary">Tisk</button>
-      </div>
-    </header>
-
-    <main>
-      <section class="toolbar card">
-        <div class="month-nav">
-          <button id="prevMonth" class="icon-btn" aria-label="Předchozí měsíc">‹</button>
-          <div class="month-title">
-            <span id="monthName"></span>
-            <span id="yearName"></span>
-          </div>
-          <button id="nextMonth" class="icon-btn" aria-label="Následující měsíc">›</button>
-        </div>
-
-        <div class="toolbar-actions">
-          <button id="addEmployeeBtn" class="btn primary">+ Přidat zaměstnance</button>
-          <button id="settingsBtn" class="btn secondary">Nastavení</button>
-        </div>
-      </section>
-
-      <section class="stats">
-        <div class="stat card">
-          <span>Počet zaměstnanců</span>
-          <strong id="employeeCount">10</strong>
-        </div>
-        <div class="stat card">
-          <span>Dovolená tento měsíc</span>
-          <strong id="monthVacationCount">0 dní</strong>
-        </div>
-        <div class="stat card">
-          <span>Dnes dovolená</span>
-          <strong id="todayVacationCount">0</strong>
-        </div>
-        <div class="stat card">
-          <span>Aktivní měsíc</span>
-          <strong id="activeMonthLabel">–</strong>
-        </div>
-      </section>
-
-      <section class="calendar-card card">
-        <div class="calendar-scroll">
-          <table id="calendarTable">
-            <thead></thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="legend card">
-        <div><span class="legend-dot vacation"></span>Dovolená</div>
-        <div><span class="legend-dot sick"></span>Nemoc</div>
-        <div><span class="legend-dot business"></span>Služební cesta</div>
-        <div><span class="legend-dot working"></span>Práce</div>
-        <div><span class="legend-dot weekend"></span>Víkend</div>
-      </section>
-
-      <section class="summary card">
-        <div class="section-title">
-          <div>
-            <h2>Roční přehled</h2>
-            <p>Stav dovolené podle zaměstnanců</p>
-          </div>
-          <div class="year-switch">
-            <button id="prevYear" class="small-btn">‹</button>
-            <span id="summaryYear"></span>
-            <button id="nextYear" class="small-btn">›</button>
-          </div>
-        </div>
-
-        <div class="table-wrap">
-          <table class="summary-table">
-            <thead>
-              <tr>
-                <th>Zaměstnanec</th>
-                <th>Nárok</th>
-                <th>Vyčerpáno</th>
-                <th>Plánováno</th>
-                <th>Zbývá</th>
-                <th>Využití</th>
-              </tr>
-            </thead>
-            <tbody id="summaryBody"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <footer>
-        <span>Evidence dovolené</span>
-        <span>Data se ukládají automaticky do tohoto zařízení.</span>
-      </footer>
-    </main>
-  </div>
-
-  <div id="dayModal" class="modal hidden">
-    <div class="modal-backdrop" data-close="dayModal"></div>
-    <div class="modal-box">
-      <button class="modal-close" data-close="dayModal">×</button>
-      <div id="dayModalContent"></div>
+<div class="app">
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">PERSONÁLNÍ EVIDENCE</div>
+      <h1>Evidence dovolené <span>2.0</span></h1>
+      <p class="subtitle">Přehled dovolené zaměstnanců v měsíčním kalendáři</p>
     </div>
-  </div>
+    <div class="header-actions">
+      <button id="todayBtn" class="btn secondary">Dnes</button>
+      <button id="printBtn" class="btn secondary">Tisk</button>
+    </div>
+  </header>
 
-  <div id="employeeModal" class="modal hidden">
-    <div class="modal-backdrop" data-close="employeeModal"></div>
-    <div class="modal-box">
-      <button class="modal-close" data-close="employeeModal">×</button>
-      <h2 id="employeeModalTitle">Přidat zaměstnance</h2>
-      <form id="employeeForm">
-        <input type="hidden" id="employeeId">
-        <label>
-          Jméno a příjmení
-          <input id="employeeName" required maxlength="60" placeholder="Např. Jan Novák">
-        </label>
-        <label>
-          Roční nárok na dovolenou
-          <input id="employeeAllowance" type="number" min="0" max="365" value="25" required>
-        </label>
-        <div class="form-actions">
-          <button type="button" class="btn secondary" data-close="employeeModal">Zrušit</button>
-          <button type="submit" class="btn primary">Uložit</button>
+  <main>
+    <section class="toolbar card">
+      <div class="month-nav">
+        <button id="prevMonth" class="icon-btn" aria-label="Předchozí měsíc">‹</button>
+        <div class="month-title">
+          <span id="monthName"></span>
+          <span id="yearName"></span>
         </div>
-      </form>
-    </div>
-  </div>
-
-  <div id="settingsModal" class="modal hidden">
-    <div class="modal-backdrop" data-close="settingsModal"></div>
-    <div class="modal-box">
-      <button class="modal-close" data-close="settingsModal">×</button>
-      <h2>Nastavení</h2>
-      <div class="settings-list">
-        <button id="exportBtn" class="settings-btn">⬇ Exportovat data do JSON</button>
-        <label class="settings-btn file-btn">
-          ⬆ Importovat data z JSON
-          <input id="importFile" type="file" accept=".json,application/json">
-        </label>
-        <button id="resetBtn" class="settings-btn danger">⚠ Obnovit výchozí data</button>
+        <button id="nextMonth" class="icon-btn" aria-label="Následující měsíc">›</button>
       </div>
-      <p class="hint">Data jsou uložena v prohlížeči pomocí localStorage. Při použití více počítačů doporučuji později přidat Supabase.</p>
-    </div>
-  </div>
+      <div class="toolbar-actions">
+        <button id="addEmployeeBtn" class="btn primary">+ Přidat zaměstnance</button>
+        <button id="settingsBtn" class="btn secondary">Nastavení</button>
+      </div>
+    </section>
 
-  <script src="app.js"></script>
+    <section class="stats">
+      <div class="stat card"><span>Počet zaměstnanců</span><strong id="employeeCount">10</strong></div>
+      <div class="stat card"><span>Dovolená tento měsíc</span><strong id="monthVacationCount">0 dní</strong></div>
+      <div class="stat card"><span>Dnes dovolená</span><strong id="todayVacationCount">0</strong></div>
+      <div class="stat card"><span>Aktivní měsíc</span><strong id="activeMonthLabel">–</strong></div>
+    </section>
+
+    <section class="calendar-card card">
+      <div class="calendar-scroll">
+        <table id="calendarTable">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="legend card">
+      <div><span class="legend-dot vacation"></span>Dovolená</div>
+      <div><span class="legend-dot sick"></span>Nemoc</div>
+      <div><span class="legend-dot business"></span>Služební cesta</div>
+      <div><span class="legend-dot working"></span>Práce</div>
+      <div><span class="legend-dot weekend"></span>Víkend</div>
+      <div><span class="legend-dot holiday"></span>Státní svátek</div>
+      <div><span class="today-mark"></span>Dnes</div>
+    </section>
+
+    <section class="summary card">
+      <div class="section-title">
+        <div>
+          <h2>Roční přehled</h2>
+          <p>Počítají se pouze pracovní dny označené jako dovolená.</p>
+        </div>
+        <div class="year-switch">
+          <button id="prevYear" class="small-btn">‹</button>
+          <span id="summaryYear"></span>
+          <button id="nextYear" class="small-btn">›</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="summary-table">
+          <thead>
+          <tr>
+            <th>Zaměstnanec</th>
+            <th>Nárok</th>
+            <th>Vyčerpáno</th>
+            <th>Plánováno</th>
+            <th>Zbývá</th>
+            <th>Využití</th>
+          </tr>
+          </thead>
+          <tbody id="summaryBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      <span>Evidence dovolené 2.0</span>
+      <span>Data se ukládají automaticky do tohoto zařízení.</span>
+    </footer>
+  </main>
+</div>
+
+<div id="dayModal" class="modal hidden">
+  <div class="modal-backdrop" data-close="dayModal"></div>
+  <div class="modal-box">
+    <button class="modal-close" data-close="dayModal">×</button>
+    <div id="dayModalContent"></div>
+  </div>
+</div>
+
+<div id="employeeModal" class="modal hidden">
+  <div class="modal-backdrop" data-close="employeeModal"></div>
+  <div class="modal-box">
+    <button class="modal-close" data-close="employeeModal">×</button>
+    <h2 id="employeeModalTitle">Přidat zaměstnance</h2>
+    <form id="employeeForm">
+      <input type="hidden" id="employeeId">
+      <label>Jméno a příjmení
+        <input id="employeeName" required maxlength="60" placeholder="Např. Jan Novák">
+      </label>
+      <label>Roční nárok na dovolenou
+        <input id="employeeAllowance" type="number" min="0" max="365" value="25" required>
+      </label>
+      <div class="form-actions">
+        <button type="button" class="btn secondary" data-close="employeeModal">Zrušit</button>
+        <button type="submit" class="btn primary">Uložit</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="settingsModal" class="modal hidden">
+  <div class="modal-backdrop" data-close="settingsModal"></div>
+  <div class="modal-box">
+    <button class="modal-close" data-close="settingsModal">×</button>
+    <h2>Nastavení</h2>
+    <div class="settings-list">
+      <button id="exportBtn" class="settings-btn">⬇ Exportovat data do JSON</button>
+      <label class="settings-btn file-btn">⬆ Importovat data z JSON
+        <input id="importFile" type="file" accept=".json,application/json">
+      </label>
+      <button id="resetBtn" class="settings-btn danger">⚠ Obnovit výchozí data</button>
+    </div>
+    <p class="hint">Data jsou uložena v prohlížeči pomocí localStorage. Zálohu lze kdykoliv exportovat do JSON.</p>
+  </div>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
